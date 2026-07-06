@@ -1,4 +1,4 @@
-> > [参考文档](https://learn.shareai.run/zh/s02/)
+> [参考文档](https://learn.shareai.run/zh/s02/)
 
 # Tool Use
 
