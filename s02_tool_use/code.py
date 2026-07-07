@@ -10,7 +10,7 @@ tool use 在 agent loop 的基础上添加更多的工具 + 分发映射
 """
 
 # 加载 s01 中的配置
-import s01_agent_loop.code as agent
+import s01_agent_loop.code as agent_loop_code
 from pathlib import Path
 
 # 获取当前文件所在的目录
@@ -241,7 +241,7 @@ TOOLS = [
 
 # 定义 handle，用于工具分发映射
 TOOL_HANDLERS = {
-    "bash": agent.run_bash,
+    "bash": agent_loop_code.run_bash,
     "read_file": run_read,
     "write_file": run_write,
     "edit_file": run_edit,
@@ -251,9 +251,9 @@ TOOL_HANDLERS = {
 # 重新实现 agent_loop ，在里面使用工具映射
 def agent_loop(messages: list):
     while True:
-        response = agent.client.messages.create(
-            model=agent.MODEL, system=agent.SYSTEM, messages=messages,
-            tools=TOOLS, max_tokens=agent.MAX_TOKEN,
+        response = agent_loop_code.client.messages.create(
+            model=agent_loop_code.MODEL, system=agent_loop_code.SYSTEM, messages=messages,
+            tools=TOOLS, max_tokens=agent_loop_code.MAX_TOKEN,
         )
         messages.append(
             {
