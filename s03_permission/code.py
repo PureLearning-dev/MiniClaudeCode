@@ -9,12 +9,13 @@ permission 验证在本地执行的大模型输出的操作
    v            v             v             v
 (normal)     (blocked)    (ask user)   (user says no?)
 """
-import s02_tool_use.code as agent
+import s02_tool_use.code as tool_use_code
 
 
 # GATE1: 直接拒绝的命令集合，这里使用硬编码是为了理解逻辑，但是真实场景中，相同的命令功能可以有许多变体
 # 在 cc 源码中使用 多文件 来源进行确认命令是否直接拒绝
 DENY_LIST = ["rm -rf /", "sudo", "shutdown", "reboot", "mkfs", "dd if=", "> /dev/sda"]
+DESTRUCTIVE = ["rm ", "> /etc/", "chmod 777"]
 
 def check_deny_list(command: str) -> str | None:
     """
@@ -42,12 +43,12 @@ def check_deny_list(command: str) -> str | None:
 PERMISSION_RULES = [
     {
         "tools": ["write_file", "edit_file"],
-        "check": lambda args: not (agent.WORKDIR / args.get("path", "")).resolve().is_relative_to(agent.WORKDIR),
+        "check": lambda args: not (tool_use_code.WORKDIR / args.get("path", "")).resolve().is_relative_to(tool_use_code.WORKDIR),
         "message": "Writing outside workspace"
     },
     {
         "tools": ["bash"],
-        "check": lambda args: any(kw in args.get("command", "") for kw in ["rm ", "> /etc/", "chmod 777"]),
+        "check": lambda args: any(kw in args.get("command", "") for kw in DESTRUCTIVE),
         "message": "Potentially destructive command"
     },
 ]
@@ -134,12 +135,12 @@ def check_permission(block) -> bool:
 def agent_loop(messages: list):
     while True:
         # 通过 messages 得到大模型的回复
-        res = agent.agent.client.messages.create(
-            model=agent.agent.MODEL,
-            system=agent.agent.SYSTEM,
-            tools=agent.agent.TOOLS,
+        res = tool_use_code.agent.client.messages.create(
+            model=tool_use_code.agent.MODEL,
+            system=tool_use_code.agent.SYSTEM,
+            tools=tool_use_code.agent.TOOLS,
             messages=messages,
-            max_tokens=agent.agent.MAX_TOKEN
+            max_tokens=tool_use_code.agent.MAX_TOKEN
         )
 
         # 将大模型的回复添加到 messages 中
@@ -179,7 +180,7 @@ def agent_loop(messages: list):
 
             # 执行工具调用
             # block.name 是工具的名称
-            handler = agent.TOOL_HANDLERS.get(block.name)
+            handler = tool_use_code.TOOL_HANDLERS.get(block.name)
 
             output = handler(**block.input) if handler else f"Unknown: {block.name}"
 
