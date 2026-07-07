@@ -9,8 +9,9 @@
 | s01 | Agent Loop | [📝](s01_agent_loop/README.md) | [code.py](s01_agent_loop/code.py) | 🟢 |
 | s02 | Tool Use | [📝](s02_tool_use/README.md) | [code.py](s02_tool_use/code.py) | 🟢 |
 | s03 | Permissions | [📝](s03_permission/README.md) | [code.py](s03_permission/code.py) | 🟢 |
-| s04 | Hooks | [📝](s04_hooks/README.md) | — | 🔴 |
-| s05-s20 | 后续章节 | — | — | ⚪ |
+| s04 | Hooks | [📝](s04_hooks/README.md) | [code.py](s04_hooks/code.py) | 🟢 |
+| s05 | TodoWrite | [📝](s05_todo_write/README.md) | [code.py](s05_todo_write/code.py) | 🔴 |
+| s06-s20 | 后续章节 | — | — | ⚪ |
 
 > 🔴 进行中　⚪ 未开始　🟢 已完成
 
@@ -21,6 +22,7 @@
 ├── s02_tool_use/      # 工具调用
 ├── s03_permission/    # 权限控制
 ├── s04_hooks/         # Hook 机制
+├── s05_todo_write/    # 任务规划
 ├── ...
 ├── main.py            # 运行入口
 ├── docs/              # 补充文档
