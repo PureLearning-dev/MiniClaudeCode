@@ -34,9 +34,12 @@ User types query
                                           results ──▶ back to messages
 """
 
+import sys, os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import s03_permission.code as permission_code
-import utils
-import hooks
+from s04_hooks import utils
+from s04_hooks import hooks
 
 # 将所有 hook 注册到 HOOKS 字典中
 utils.register_hook("UserPromptSubmit", hooks.context_inject_hook)
