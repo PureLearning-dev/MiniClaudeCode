@@ -1,4 +1,4 @@
-> [参考文档](https://learn.shareai.run/zh/s10/)
+> [参考文档](https://learn.shareai.run/zh/s11/)
 
 # Error Recovery
 
