@@ -234,7 +234,7 @@ wheels = [
 ]
 
 [[package]]
-name = "nono-claudecode"
+name = "mini-claudecode"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
