@@ -388,12 +388,15 @@ register_hook("Stop", summary_hook)
 #  agent_loop — same as s05-s06 + nag reminder
 # ═══════════════════════════════════════════════════════════
 
+# 从执行 todo 之后的没有执行 todo 的次数
 rounds_since_todo = 0
 
 
 def agent_loop(messages: list):
     global rounds_since_todo
     while True:
+
+        # 当没有执行 todo 3 次循环并 message 不为空时，提醒 LLM 需要进行规划一下
         if rounds_since_todo >= 3 and messages:
             messages.append({"role": "user",
                              "content": "<reminder>Update your todos.</reminder>"})
@@ -412,6 +415,7 @@ def agent_loop(messages: list):
                 continue
             return
 
+        # 循环次数 +1
         rounds_since_todo += 1
         results = []
         for block in response.content:
