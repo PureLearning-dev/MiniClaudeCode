@@ -1,4 +1,4 @@
-> [参考文档](https://learn.shareai.run/zh/s15/)
+> [参考文档](https://learn.shareai.run/zh/s16/)
 
 # Team Protocols
 
